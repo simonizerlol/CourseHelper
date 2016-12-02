@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>IDK</title>
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='bootstrap.css') }}">
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='user-reg.css') }}">
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid-orig">
+        <div class="navbar-header">
+            <!--<a class="navbar-brand" href="#">
+            <img alt="Brand" src="{{ url_for('static',filename='img/letter-C-blue-icon.png') }}">
+            </a>-->
+            <a class="navbar-brand" href="/">CourseHelper</a>
+        </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#"> Home <span class="sr-only">(current)</span></a></li>
+        </ul>
+        <form id="searchform" class="navbar-form" role="search" onsubmit="return onSubmitSearch()">
+        <div class="form-group" style="display: inline;">
+          <input type="text"  id="searchtxt" class="form-control" size="35" placeholder="Search for courses or users">
+        </div>
+          <button type="submit" class="btn-orig btn-default">Submit</button>
+        </form>
+        <!--<form id="searchuserform" class="navbar-form" role="search" onsubmit="return onSubmitSearchUser()">
+        <div class="form-group" style="display: inline;">
+          <input type="text"  id="searchusertxt" class="form-control" placeholder="Search for Users">
+        </div>
+          <button type="submit" class="btn-orig btn-default">Submit</button>
+        </form>-->
+      <form class="navbar-form navbar-right" role="logout" action="/logout">
+        <div class="form-group">
+          <button type="submit" class="btn-orig btn-default">Logout </button>
+        </div>
+      </form>
+      </div>
+      </nav>
+         <script type="text/javascript">
+      function onSubmitSearch()
+      {
+         var x = document.getElementById("searchtxt").value;
+         if( x.trim() == "") {
+          return false;
+         }
+         var str1 = "/courses/";
+         var query = str1.concat(x);
+         // console.log(query);
+         document.getElementById("searchform").action = str1.concat(x,"/");
+         return true;
+        }
+
+        function onSubmitSearchUser() {
+         var x = document.getElementById("searchusertxt").value;
+         if( x.trim() == "") {
+          return false;
+         }
+         var str1 = "/profiles/";
+         var query = str1.concat(x);
+         // console.log(query);
+         document.getElementById("searchuserform").action = str1.concat(x,"/");
+         return true;
+        }
+    </script>
+
+      <div class="body-container">
+      <div class="container-fluid-cr">
+        <!--<div class="row-fluid">-->
+            <h1> Welcome, {{ username }} </h1>
+            <div class="row">
+
+            <div class="col-md-4">
+            {% if courses %}
+            <h3> Your courses: </h3>
+            <ul class="list-group">
+            {% for course in courses %}
+              <a href="/courses/{{ course.courseid }}" class="list-group-item list-group-item-action"> {{ course.courseid }}</a>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <h3> You aren't currently following any courses. You can follow a course by visiting the course page and they will appear on your home screen.</h3>
+            {% endif %}
+            </div>
+
+ 
+            <div class="col-md-4">
+            {% if followedusers %}
+            <h3> Friends list: </h3>
+            <ul class="list-group">
+            {% for user in followedusers %}
+              <a href="/profiles/{{ user.followeduser }}/" class="list-group-item list-group-item-action"> {{ user.followeduser }}</a>
+            {% endfor %}
+            </ul>
+            {% else %}
+
+            <h3> You aren't currently following anybody - use the search bar to find people to follow. </h3>
+
+            {% endif %}
+            </div>
+            
+            <div class="col-md-4">
+            {% if posts %}
+            <h3> Your posts: </h3>
+            <ul class="list-group">
+            {% for post in posts %}
+              <li class="list-group-item list-group-item-action"> {{ post.post }} - {{ post.courseid }}</li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <h3> You haven't written any posts yet.</h3>
+            {% endif %}
+            </div>
+          </div>
+
+          <div class="row">
+          <div class="col-md-4">
+            {% if reviews %}
+            <h3> Your reviews: </h3>
+            <ul class="list-group">
+            {% for review in reviews %}
+              <li class="list-group-item list-group-item-action"> {{ review.review }} - {{ review.courseid }}</li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <h3> You haven't written any reviews yet.</h3>
+            {% endif %}
+            </div>
+
+            <div class="col-md-4">
+            {% if resources %}
+            <h3> Your resources: </h3>
+            <ul class="list-group">
+            {% for review in reviews %}
+              <li class="list-group-item list-group-item-action"> {{ resource.title }} 
+              {% if resource.description %}: {{ resource.description }} {% endif %} - {{ resource.courseid }} </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <h3> You haven't written any reviews yet.</h3>
+            {% endif %}
+            </div>
+          </div>
+
+          </div>
+        </div>
+    </body>
+

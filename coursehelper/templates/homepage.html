@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>IDK</title>
+    <title>CourseHelper</title>
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='bootstrap.css') }}">
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='user-reg.css') }}">
 
@@ -133,13 +133,13 @@
             {% if resources %}
             <h3> Your resources: </h3>
             <ul class="list-group">
-            {% for review in reviews %}
+            {% for resource in resources %}
               <li class="list-group-item list-group-item-action"> {{ resource.title }} 
               {% if resource.description %}: {{ resource.description }} {% endif %} - {{ resource.courseid }} </li>
             {% endfor %}
             </ul>
             {% else %}
-            <h3> You haven't written any reviews yet.</h3>
+            <h3> You haven't written any resources yet.</h3>
             {% endif %}
             </div>
           </div>
